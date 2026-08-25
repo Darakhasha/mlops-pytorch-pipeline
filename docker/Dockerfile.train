@@ -1,0 +1,29 @@
+# Stage 1: dependencies
+FROM python:3.11-slim AS builder
+
+WORKDIR /app
+
+COPY requirements/train.txt .
+
+RUN pip install --no-cache-dir -r train.txt
+
+
+# Stage 2: training image
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Copy installed Python packages from builder
+COPY --from=builder /usr/local/lib/python3.11/site-packages \
+    /usr/local/lib/python3.11/site-packages
+
+COPY --from=builder /usr/local/bin \
+    /usr/local/bin
+
+COPY src/ ./src/
+COPY configs/ ./configs/
+
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONPATH=/app/src:/app
+
+ENTRYPOINT ["python", "src/train.py"]
