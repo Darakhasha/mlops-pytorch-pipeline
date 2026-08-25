@@ -9,7 +9,8 @@ def test_model_output_shape():
         num_classes=10,
     )
 
-    x = torch.randn(2, 3, 32, 32)
+    # Fashion-MNIST: batch × channels × height × width
+    x = torch.randn(2, 1, 28, 28)
 
     output = model(x)
 
@@ -22,7 +23,8 @@ def test_model_can_predict():
         num_classes=10,
     )
 
-    x = torch.randn(1, 3, 32, 32)
+    # Fashion-MNIST input
+    x = torch.randn(1, 1, 28, 28)
 
     output = model(x)
 
