@@ -17,16 +17,16 @@ app = FastAPI(
 
 # CIFAR-10 class names
 CLASS_NAMES = [
-    "airplane",
-    "automobile",
-    "bird",
-    "cat",
-    "deer",
-    "dog",
-    "frog",
-    "horse",
-    "ship",
-    "truck",
+    "t-shirt",
+    "trouser",
+    "pullover",
+    "dress",
+    "coat",
+    "sandal",
+    "shirt",
+    "sneaker",
+    "bag",
+    "ankle_boot",
 ]
 
 
@@ -86,13 +86,13 @@ except Exception as exc:
     MODEL_LOADED = False
     MODEL_ERROR = str(exc)
 
-
 image_transform = transforms.Compose([
-    transforms.Resize((32, 32)),
+    transforms.Grayscale(num_output_channels=1),
+    transforms.Resize((28, 28)),
     transforms.ToTensor(),
     transforms.Normalize(
-        mean=[0.4914, 0.4822, 0.4465],
-        std=[0.2470, 0.2435, 0.2616],
+        mean=[0.2860],
+        std=[0.3530],
     ),
 ])
 
